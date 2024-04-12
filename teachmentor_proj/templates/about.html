@@ -1,0 +1,113 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Подключаем стили Bootstrap для удобного создания интерфейса -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Подключаем стили Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Общие стили */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            padding-top: 60px; /* Компенсация для фиксированного верхнего меню */
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        /* Стили для верхнего меню */
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .navbar-brand:hover {
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+        }
+
+        /* Стили для кнопки "Back to Home" */
+        .back-to-home-btn {
+            margin-top: 20px;
+        }
+        .image-container {
+        position: relative;
+        left: 170px;
+        top: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Верхнее меню -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="{%static 'img/image.png'%}" width="200" height="45" alt="TeachMentor"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a> <!-- Ссылка на страницу "About" -->
+                    </li>
+
+                 </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <!-- Заголовок -->
+        <h1 class="text-center mb-5">About Us</h1>
+
+        <!-- Информация о вашей компании или проекте -->
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.</p>
+        <p>Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
+        <p>Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        <br>
+
+        
+        <!-- Кнопка "Back to Home" -->
+        <div class="text-center back-to-home-btn">
+            <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="image-container">
+        <img src="{%static 'img/image2.png'%}" width="400" height="90">
+        <br>
+            <p>© 2024 TeachMentor.am</p>
+        </div>
+        </div>
+
+
+    <!-- Подключаем скрипты Bootstrap и Font Awesome для правильной работы иконок и стилей -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
