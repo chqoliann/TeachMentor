@@ -25,7 +25,7 @@ __logout__, which you will learn more about in the next issue.
     * ___SQL___
     * ___Github___
 ___
-### Website structure
+### Website structure :computer:
 * Clicking the "__about__" button will take you to __about__
 section where our activities are briefly presented
 and about us.
@@ -40,7 +40,7 @@ in the __register__ section.
 * By pressing the "__home__" button, you return to the main page.
 
 ___
-### Application:
+### Application: :white_check_mark:
 
 * After logging in to your own page, you will be able to
 get more information about programming languages.
@@ -48,7 +48,7 @@ More about programming courses on the home page
 to get information you should press the "__ENTER__" button,
 which is under the name of the given programming language.
 ___
-### Registration and Login
+### Registration and Login :e-mail:
 
 * To register on the __TeachMentor__ website, you must:
   * Enter the __register__ section,
@@ -61,7 +61,7 @@ ___
   your registered data)
   * press the __LOGIN__ button.
 ___
-### Support and Feedback
+### Support and Feedback :mailbox_with_mail:
 
 * for additional questions or feedback, you can contact us in the following steps:
   * on the platform at the bottom of the site's home page
