@@ -1,4 +1,4 @@
-[Switch to English](docs/en/README.md)
+[Switch to English](docs/en/readme_en.md)
 
 # Documentation :page_facing_up:
 ___
