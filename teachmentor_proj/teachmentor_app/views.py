@@ -83,11 +83,16 @@ def like_course(request, course_id):
     user_profile.liked_courses.add(course)
     course.likes += 1
     course.save()
-    return HttpResponse("Course liked successfully!")
+    return redirect('index')
 
 
 @login_required
 def user_profile(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
     liked_courses = user_profile.liked_courses.all()
     return render(request, 'user_profile.html', {'user_profile': user_profile, 'liked_courses': liked_courses})
+
+
+def course_details(request, course_id):
+    courses = get_object_or_404(Course, pk=course_id)
+    return render(request, 'course_details.html', {'course':courses})

@@ -7,7 +7,8 @@ class Course(models.Model):
     price = models.IntegerField(default=0)
     description = models.TextField()
     likes = models.IntegerField(default=0)
-
+    book_link = models.URLField(blank=True)
+    video_link = models.URLField(blank=True)
     def __str__(self):
         return f"{self.course_name}, {self.price}"
 

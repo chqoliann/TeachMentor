@@ -1,20 +1,172 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+    /* Общие стили */
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+        padding-top: 60px; /* Компенсация для фиксированного верхнего меню */
+    }
+
+    .container {
+        max-width: 800px;
+
+    }
+
+    .navbar {
+        background-color: #343a40;
+    }
+
+    .navbar-brand {
+        color: #fff;
+        font-size: 24px;
+    }
+
+    .navbar-brand:hover {
+        color: #fff;
+    }
+
+    .navbar-nav .nav-link {
+        color: #fff;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #f8f9fa;
+    }
+
+    .profile_container {
+        position: fixed;
+        left: 745px;
+        top: 190px;
+
+    }
+    .logo-container {
+        position: fixed;
+        left: 850px;
+        top: 800px;
+
+    }
+    .profile-section {
+            border: 5px solid #dee2e6; /* Рамка вокруг раздела */
+            border-radius: 10px; /* Скругление углов */
+            padding: 10px;
+            margin-bottom: 30px;
+
+        }
+    .profile-section h1 {
+            margin-top: 0; /* Убираем отступ сверху у заголовка */
+        }
+
+        .profile-section h2 {
+            margin-top: 0;
+        }
+
+        .profile-section p {
+            margin-bottom: 5px;
+        }
+
+        .liked-courses li {
+            color: #343a40;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .width-profile {
+           max-width: 300px;
+    margin: 0 auto;
+    text-align: center;
+
+        }
+
+</style>
+
 </head>
 <body>
-    <h1>User Profile</h1>
-    <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
-    <p><strong>Registration Date:</strong> {{ user_profile.registration_date }}</p>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="{% static 'img/image.png' %}" width="200" height="45" alt="TechMentor"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <h2>Liked Courses:</h2>
-    <ul>
-        {% for course in liked_courses %}
-            <li>{{ course.course_name }}</li>
-        {% endfor %}
-    </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                </li>
+                {% if user.is_authenticated %}
+                 <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'feedback' %}?name-feedback">Feedback</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container mt-5">
+    <div class="width-profile">
+    <div class="profile-section">
+        <div class="user-info">
+        <h1>User Profile</h1>
+        </div>
+    </div>
+    </div>
+    <div class="profile-section">
+        <div class="user-info">
+            <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
+            <p><strong>Registration Date:</strong> {{ user_profile.registration_date }}</p>
+        </div>
+    </div>
+
+    <!-- Понравившиеся курсы -->
+    <div class="profile-section liked-courses">
+        <h2>Liked Courses:</h2>
+        <ul>
+            {% for course in liked_courses %}
+                <a href="{% url 'course_details' course.id %}"><li>{{ course.course_name }}</li></a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+    <div class="logo-container">
+    <div class="text-center contact-icons mt-5">
+        <a href="https://www.instagram.com/nar.chqolyann"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100066708270558"><i class="fab fa-facebook"></i></a>
+        <a href="https://vk.com/id856189582"><i class="fab fa-vk"></i></a>
+        <a href="https://www.linkedin.com/in/narek-chqolian-0b3b27290/"><i class="fab fa-linkedin"></i></a>
+
+            <p>© 2024 TeachMentor</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
 </body>
 </html>
