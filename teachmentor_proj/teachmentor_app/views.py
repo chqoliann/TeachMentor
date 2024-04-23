@@ -3,9 +3,11 @@ from .models import Course, UserProfile
 from .forms import UserRegistrationForm, UserLoginForm, FeedbackForm
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 
+
+@csrf_protect
 def feedback_view(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
@@ -35,6 +37,7 @@ def about(request):
     return render(request, 'about.html')
 
 
+@csrf_protect
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -50,6 +53,7 @@ def register(request):
     return render(request, 'register.html', {'user_form': user_form})
 
 
+@csrf_protect
 def user_login(request):
     if request.method == 'POST':
         form = UserLoginForm(request.POST)

@@ -145,7 +145,8 @@
         <h2>Liked Courses:</h2>
         <ul>
             {% for course in liked_courses %}
-                <a href="{% url 'course_details' course.id %}"><li>{{ course.course_name }}</li></a>
+                <a href="{% url 'course_details' course.id
+                %}"><li>{{ course.course_name }}</li></a>
             {% endfor %}
         </ul>
     </div>
