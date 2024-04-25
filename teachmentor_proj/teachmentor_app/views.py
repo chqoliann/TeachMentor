@@ -35,7 +35,6 @@ def about(request):
     return render(request, 'about.html')
 
 
-
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -49,7 +48,6 @@ def register(request):
     else:
         user_form = UserRegistrationForm()
     return render(request, 'register.html', {'user_form': user_form})
-
 
 
 def user_login(request):
