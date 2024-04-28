@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate, logout
-from .models import Course, UserProfile
-from .forms import UserRegistrationForm, UserLoginForm, FeedbackForm
+from .models import Course, UserProfile, Test, Question, Choice, UserAnswer, UserTestResult
+from .forms import UserRegistrationForm, UserLoginForm, FeedbackForm, CourseForm
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -94,5 +94,56 @@ def user_profile(request):
 
 
 def course_details(request, course_id):
-    courses = get_object_or_404(Course, pk=course_id)
-    return render(request, 'course_details.html', {'course':courses})
+    course = get_object_or_404(Course, pk=course_id)
+    test = Test.objects.filter(course=course).first()  # Получаем тест для данного курса
+    return render(request, 'course_details.html', {'course': course, 'test': test})
+
+
+def add_course(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = CourseForm()
+    return render(request, 'add_course.html', {'form':form})
+
+
+def view_test(request, test_id):
+    test = get_object_or_404(Test, pk=test_id)
+    questions = Question.objects.filter(test=test)
+    choices_for_questions = {}
+    for question in questions:
+        choices = Choice.objects.filter(question=question)
+        choices_for_questions[question] = choices
+    return render(request, 'test.html', {'test': test, 'questions': questions, 'choices':choices})
+
+
+def process_test(request, test_id):
+    test = get_object_or_404(Test, pk=test_id)
+    user = request.user
+    correct_answers_count = 0
+    total_questions = Question.objects.filter(test=test).count()  # Запрос для получения вопросов этого теста
+
+    if request.method == 'POST':
+        if total_questions > 0:
+            for question in Question.objects.filter(test=test):
+                choice_id = request.POST.get(f'question_{question.id}', None)
+                if choice_id is not None:
+                    choice = get_object_or_404(Choice, pk=choice_id)
+                    if choice.is_correct:
+                        correct_answers_count += 1
+
+            percentage_correct = (correct_answers_count / total_questions) * 100
+        else:
+            percentage_correct = 0
+
+        print("Correct answers count:", correct_answers_count)
+        print("Total questions:", total_questions)
+        print("Percentage correct:", percentage_correct)
+
+        return render(request, 'test_result.html', {'correct_answers_count': correct_answers_count, 'total_questions': total_questions, 'percentage_correct': percentage_correct})
+
+    else:
+        return redirect('test', test_id=test_id)

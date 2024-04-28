@@ -168,50 +168,22 @@
 </nav>
 
 
+{% block content %}
+  <div class="container mt-5">
+    <div class="course-details p-4 border rounded">
+      <h2 class="mb-4 text-dark text-center">Add Course</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
 
-    <div class="container mt-5">
-        <form method="GET" action="/">
-            <div class="form-group">
-                <input type="text" class="form-control" name="q" placeholder="Search for courses">
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-
-        <!-- Заголовок -->
-        <h1 class="text-center mb-5">Explore Our Programming Courses</h1>
-
-        <!-- Список курсов -->
-        {% for course in courses %}
-<div class="course-card">
-    <h2>{{ course.course_name }}</h2>
-    <p>Description: {{ course.description }}</p>
-
-    {% if user.is_authenticated %}
-        <div class="row">
-            <div class="col-md-6">
-                <!-- Кнопка "Like" -->
-                {% if course in user.userprofile.liked_courses.all %}
-                    <button class="btn btn-secondary disabled">Liked</button>
-                {% else %}
-                    <form action="{% url 'like_course' course.pk %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Like</button>
-                    </form>
-                {% endif %}
-            </div>
-            <div class="col-md-6">
-                <!-- Кнопка "MORE" -->
-                <a href="{% url 'course_details' course.pk %}" class="btn btn-info">More</a>
-            </div>
-        </div>
-    {% else %}
-        <p><a href="{% url 'login' %}" class="btn btn-lg btn-primary">Login</a> to learning the course</p>
-    {% endif %}
-</div>
+    </body>
 
 
-
-{% endfor %}
         <div class="logo-container">
              <div class="text-center contact-icons mt-5">
             <a href="https://www.instagram.com/nar.chqolyann"><i class="fab fa-instagram"></i></a>
@@ -229,3 +201,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     </body>
 </html>
+
+

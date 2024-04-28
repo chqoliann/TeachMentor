@@ -105,6 +105,9 @@
                     <a class="nav-link" href="{% url 'about' %}">About Us</a>
                 </li>
                 {% if user.is_authenticated %}
+                <li class="nav-item">
+                        <a class="nav-link link-effect" href="{% url 'add_course' %}">Add Course</a>
+                    </li>
                  <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
                     </li>

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import FeedBackMessage
+from .models import FeedBackMessage, Course
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -28,3 +28,9 @@ class FeedbackForm(forms.ModelForm):
         model = FeedBackMessage
         fields = ['name', 'email', 'message']
 
+
+class CourseForm(forms.ModelForm):
+
+    class Meta:
+        model = Course
+        fields = ['course_name', 'description', 'book_link', 'video_link']
