@@ -124,7 +124,7 @@ def process_test(request, test_id):
     test = get_object_or_404(Test, pk=test_id)
     user = request.user
     correct_answers_count = 0
-    total_questions = Question.objects.filter(test=test).count()  # Запрос для получения вопросов этого теста
+    total_questions = Question.objects.filter(test=test).count()
 
     if request.method == 'POST':
         if total_questions > 0:
@@ -138,11 +138,6 @@ def process_test(request, test_id):
             percentage_correct = (correct_answers_count / total_questions) * 100
         else:
             percentage_correct = 0
-
-        print("Correct answers count:", correct_answers_count)
-        print("Total questions:", total_questions)
-        print("Percentage correct:", percentage_correct)
-
         return render(request, 'test_result.html', {'correct_answers_count': correct_answers_count, 'total_questions': total_questions, 'percentage_correct': percentage_correct})
 
     else:
