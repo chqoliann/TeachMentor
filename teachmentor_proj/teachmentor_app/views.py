@@ -2,9 +2,9 @@ from django.contrib.auth import login, authenticate, logout
 from .models import Course, UserProfile, Test, Question, Choice, UserAnswer, UserTestResult
 from .forms import UserRegistrationForm, UserLoginForm, FeedbackForm, CourseForm
 from django.utils import timezone
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-
+from django.utils import translation
 
 def feedback_view(request):
     if request.method == 'POST':
@@ -117,7 +117,7 @@ def view_test(request, test_id):
     for question in questions:
         choices = Choice.objects.filter(question=question)
         choices_for_questions[question] = choices
-    return render(request, 'test.html', {'test': test, 'questions': questions, 'choices':choices})
+    return render(request, 'test.html', {'test': test, 'questions': questions, 'choices_for_questions': choices_for_questions} )
 
 
 def process_test(request, test_id):
@@ -138,7 +138,23 @@ def process_test(request, test_id):
             percentage_correct = (correct_answers_count / total_questions) * 100
         else:
             percentage_correct = 0
-        return render(request, 'test_result.html', {'correct_answers_count': correct_answers_count, 'total_questions': total_questions, 'percentage_correct': percentage_correct})
+
+        selected_choices = {}
+        for key in request.POST:
+            if key.startswith('question_'):
+                question_id = key.split('_')[1]
+                choice_id = request.POST[key]
+                selected_choices[question_id] = get_object_or_404(Choice, pk=choice_id)
+
+        return render(request, 'test_result.html', {
+            'correct_answers_count': correct_answers_count,
+            'total_questions': total_questions,
+            'percentage_correct': percentage_correct,
+            'selected_choices': selected_choices,
+        })
 
     else:
         return redirect('test', test_id=test_id)
+
+
+

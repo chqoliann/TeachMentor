@@ -1,14 +1,127 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test Results</title>
+    <title>{{ test.title }} - Test Results</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #f2f2f2;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .meter {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            background-color: #dcdcdc;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #3F8842, #22BD29);
+            border-radius: 15px;
+            animation: progressAnimation 1s ease forwards; /* Анимация прогресса */
+        }
+        .progress.green {
+            animation-delay: 0.5s; /* Задержка анимации */
+        }
+        @keyframes progressAnimation {
+            from { width: 0; } /* Начальное значение */
+            to { width: {{ percentage_correct }}%; } /* Конечное значение */
+        }
+        .arrow {
+            position: absolute;
+            top: -10px;
+            left: calc({{ percentage_correct }}% - 10px);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #333;
+            transition: left 1s ease;
+        }
+        .percentage {
+            position: relative;
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+            margin-top: 10px;
+        }
+        /* Анимация кнопки Home */
+        .home-button {
+            background-color: #007bff;
+            color: #fff;
+            position: relative;
+            left: 500px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+
+        }
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Test Results</h1>
-    <h2>Correct Answers:</h2>
-    <p>Total correct answers: {{ correct_answers_count }}</p>
-    <p>Total questions: {{ total_questions }}</p>
-    <p>Percentage correct: {{ percentage_correct }}%</p>
+    <div class="container">
+        <h1>{{ test.title }}</h1>
+        <h2>Test Results</h2>
+        <p>Number of correct answers: {{ correct_answers_count }} out of {{ total_questions }}</p>
+        <div class="meter">
+            <div class="progress green"></div>
+            <div class="arrow"></div>
+        </div>
+        <div class="percentage">{{ percentage_correct }}%</div>
+    </div>
+    <a href="/" class="home-button">Home</a>
 </body>
 </html>
