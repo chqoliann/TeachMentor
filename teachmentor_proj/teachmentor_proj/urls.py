@@ -1,7 +1,8 @@
 from django.contrib import admin
-from django.urls import path, include  # Importing include for including app URLs
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('teachmentor_app.urls')),  # Including teachmentor_app URLs
+    path('', include('teachmentor_app.urls')),
+    path('', include('teachmentor_ru_app.urls'))
 ]

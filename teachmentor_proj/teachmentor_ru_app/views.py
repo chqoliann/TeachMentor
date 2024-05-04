@@ -4,9 +4,9 @@ from .forms import UserRegistrationForm, UserLoginForm, FeedbackForm, CourseForm
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.utils import translation
 
-def feedback_view(request):
+
+def feedback_view_ru(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
@@ -16,26 +16,26 @@ def feedback_view(request):
             return redirect('feedback_success')
     else:
         form = FeedbackForm()
-    return render(request, 'en/feedback.html', {'form': form})
+    return render(request, 'ru/feedback_ru.html', {'form': form})
 
 
-def feedback_success(request):
-    return render(request, 'en/feedback_done.html')
+def feedback_success_ru(request):
+    return render(request, 'ru/feedback_done_ru.html')
 
 
-def index(request):
+def index_ru(request):
     all_courses = Course.objects.all()
     query = request.GET.get('q')
     if query:
         all_courses = all_courses.filter(course_name__icontains=query)
-    return render(request, 'en/index.html', {'courses': all_courses})
+    return render(request, 'ru/index_ru.html', {'courses':all_courses})
 
 
-def about(request):
-    return render(request, 'en/about.html')
+def about_ru(request):
+    return render(request, 'ru/about_ru.html')
 
 
-def register(request):
+def register_ru(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
@@ -47,10 +47,10 @@ def register(request):
             return redirect('login')
     else:
         user_form = UserRegistrationForm()
-    return render(request, 'en/register.html', {'user_form': user_form})
+    return render(request, 'ru/register_ru.html', {'user_form': user_form})
 
 
-def user_login(request):
+def user_login_ru(request):
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -62,22 +62,22 @@ def user_login(request):
                 return redirect('index')
             else:
                 error = 'Invalid login credentials'
-                return render(request, 'en/login.html', {'form': form, 'error': error})
+                return render(request, 'ru/login_ru.html', {'form': form, 'error': error})
     else:
         form = UserLoginForm()
-    return render(request, 'en/login.html', {'form': form})
+    return render(request, 'ru/login.html_ru', {'form': form})
 
 
-def user_logout(request):
+def user_logout_ru(request):
     logout(request)
     return redirect('/')
 
 
-def register_done(request):
-    return render(request, 'en/register_done.html')
+def register_done_ru(request):
+    return render(request, 'ru/register_done_ru.html')
 
 
-def like_course(request, course_id):
+def like_course_ru(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     user_profile = request.user.userprofile
     user_profile.liked_courses.add(course)
@@ -87,19 +87,19 @@ def like_course(request, course_id):
 
 
 @login_required
-def user_profile(request):
+def user_profile_ru(request):
     user_profile = get_object_or_404(UserProfile, user=request.user)
     liked_courses = user_profile.liked_courses.all()
-    return render(request, 'en/user_profile.html', {'user_profile': user_profile, 'liked_courses': liked_courses})
+    return render(request, 'ru/user_profile_ru.html', {'user_profile': user_profile, 'liked_courses': liked_courses})
 
 
-def course_details(request, course_id):
+def course_details_ru(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     test = Test.objects.filter(course=course).first()  # Получаем тест для данного курса
-    return render(request, 'en/course_details.html', {'course': course, 'test': test})
+    return render(request, 'ru/course_details_ru.html', {'course': course, 'test': test})
 
 
-def add_course(request):
+def add_course_ru(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -107,20 +107,20 @@ def add_course(request):
             return redirect('index')
     else:
         form = CourseForm()
-    return render(request, 'en/add_course.html', {'form': form})
+    return render(request, 'ru/add_course_ru.html', {'form':form})
 
 
-def view_test(request, test_id):
+def view_test_ru(request, test_id):
     test = get_object_or_404(Test, pk=test_id)
     questions = Question.objects.filter(test=test)
     choices_for_questions = {}
     for question in questions:
         choices = Choice.objects.filter(question=question)
         choices_for_questions[question] = choices
-    return render(request, 'en/test.html', {'test': test, 'questions': questions, 'choices_for_questions': choices_for_questions} )
+    return render(request, 'ru/test_ru.html', {'test': test, 'questions': questions, 'choices_for_questions': choices_for_questions} )
 
 
-def process_test(request, test_id):
+def process_test_ru(request, test_id):
     test = get_object_or_404(Test, pk=test_id)
     user = request.user
     correct_answers_count = 0
@@ -146,7 +146,7 @@ def process_test(request, test_id):
                 choice_id = request.POST[key]
                 selected_choices[question_id] = get_object_or_404(Choice, pk=choice_id)
 
-        return render(request, 'en/test_result.html', {
+        return render(request, 'ru/test_result_ru.html', {
             'correct_answers_count': correct_answers_count,
             'total_questions': total_questions,
             'percentage_correct': percentage_correct,
@@ -155,7 +155,6 @@ def process_test(request, test_id):
 
     else:
         return redirect('test', test_id=test_id)
-
 
 def change_language(request):
     if request.method == 'POST':

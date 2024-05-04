@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import feedback_success,feedback_view, index, about, user_login, user_logout, register, register_done, like_course, user_profile, course_details, add_course, process_test, view_test
+from .views import feedback_success,feedback_view, index, about, user_login, user_logout, register, register_done, like_course, user_profile, course_details, add_course, process_test, view_test, change_language
 
+app_name = 'teachmentor_app'
 
 urlpatterns = [
     path('', index, name='index'),
@@ -17,6 +18,6 @@ urlpatterns = [
     path('add_course/', add_course, name='add_course'),
     path('test/<int:test_id>/', view_test, name='test'),
     path('test/<int:test_id>/process/', process_test, name='process_test'),
-
+    path('change-language/', change_language, name='change_language')
 ]
 

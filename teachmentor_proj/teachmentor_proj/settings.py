@@ -20,6 +20,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'teachmentor_ru_app',
     'teachmentor_app',
     'django.contrib.admin',
     'django.contrib.auth',

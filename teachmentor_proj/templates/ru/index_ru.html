@@ -136,35 +136,70 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link link-effect" href="/">Home</a>
+                    <a class="nav-link link-effect" href="/">Главная страница</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-effect" href="{% url 'about' %}">About Us</a>
+                    <a class="nav-link link-effect" href="{% url 'about_ru' %}">О нас</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link link-effect" href="{% url 'user_profile' %}">Profile</a>
+                        <a class="nav-link link-effect" href="{% url 'user_profile_ru' %}">Профиль</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link-effect" href="{% url 'add_course' %}">Add Course</a>
+                        <a class="nav-link link-effect" href="{% url 'add_course_ru' %}">Добавить курс</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link-effect" href="{% url 'logout' %}">Sign Out</a>
+                        <a class="nav-link link-effect" href="{% url 'logout_ru' %}">выход</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link link-effect" href="{% url 'login' %}">Sign In</a>
+                        <a class="nav-link link-effect" href="{% url 'login_ru' %}">Войти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link-effect" href="{% url 'register' %}">Sign Up</a>
+                        <a class="nav-link link-effect" href="{% url 'register_ru' %}">Зарегистрироваться</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link link-effect" href="{% url 'feedback' %}?name-feedback">Feedback</a>
+                    <a class="nav-link link-effect" href="{% url 'feedback_ru' %}?name-feedback">обратная связь</a>
                 </li>
             </ul>
         </div>
     </div>
+    <form action="/change-language/" method="post">
+    {% csrf_token %}
+    <button type="submit" name="language" value="ru">Русский</button>
+    <button type="submit" name="language" value="en">English</button>
+</form>
+    <script>
+        document.getElementById('language-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+
+    var language = event.target.elements['language'].value;
+
+    // Создаем объект FormData для отправки данных на сервер
+    var formData = new FormData();
+    formData.append('language', language);
+
+    // Отправляем POST-запрос на сервер с выбранным языком
+    fetch('/change-language/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}' // Добавляем CSRF-токен для защиты от CSRF-атак
+        }
+    }).then(function(response) {
+        if (response.ok) {
+            return response.text();
+        }
+        throw new Error('Network response was not ok.');
+    }).then(function(data) {
+        // Перенаправляем пользователя на новую страницу
+        window.location.href = data;
+    }).catch(function(error) {
+        console.log('There has been a problem with your fetch operation: ', error.message);
+    });
+});
+    </script>
 </nav>
 
 
@@ -174,17 +209,17 @@
             <div class="form-group">
                 <input type="text" class="form-control" name="q" placeholder="Search for courses">
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary">Поиск</button>
         </form>
 
         <!-- Заголовок -->
-        <h1 class="text-center mb-5">Explore Our Programming Courses</h1>
+        <h1 class="text-center mb-5">Ознакомьтесь с нашими курсами программирования</h1>
 
         <!-- Список курсов -->
         {% for course in courses %}
 <div class="course-card">
     <h2>{{ course.course_name }}</h2>
-    <p>Description: {{ course.description }}</p>
+    <p>Description: {{ course.description_ru }}</p>
 
     {% if user.is_authenticated %}
         <div class="row">
@@ -193,7 +228,7 @@
                 {% if course in user.userprofile.liked_courses.all %}
                     <button class="btn btn-secondary disabled">Liked</button>
                 {% else %}
-                    <form action="{% url 'like_course' course.pk %}" method="POST">
+                    <form action="{% url 'like_course_ru' course.pk %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-primary">Like</button>
                     </form>
@@ -201,11 +236,11 @@
             </div>
             <div class="col-md-6">
                 <!-- Кнопка "MORE" -->
-                <a href="{% url 'course_details' course.pk %}" class="btn btn-info">More</a>
+                <a href="{% url 'course_details_ru' course.pk %}" class="btn btn-info">подробнее</a>
             </div>
         </div>
     {% else %}
-        <p><a href="{% url 'login' %}" class="btn btn-lg btn-primary">Login</a> to learning the course</p>
+        <p><a href="{% url 'login_ru' %}" class="btn btn-lg btn-primary">Login</a>для изучения курса</p>
     {% endif %}
 </div>
 
