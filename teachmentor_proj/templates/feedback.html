@@ -1,0 +1,250 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeedBack</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Общие стили */
+        body {
+            background-color: #121212; /* Темный цвет фона */
+            color: #ffffff; /* Белый цвет текста */
+            font-family: Arial, sans-serif;
+            padding-top: 60px; /* Компенсация для фиксированного верхнего меню */
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        /* Стили для верхнего меню */
+        .navbar {
+            background-color: #212529; /* Очень темный цвет верхнего меню */
+        }
+
+        .navbar-brand {
+            color: #ffffff; /* Белый цвет текста логотипа */
+            font-size: 24px;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff; /* Белый цвет текста ссылок в меню */
+        }
+
+        .navbar-nav .nav-link::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #f39c12; /* Оранжевый цвет полоски */
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover::before {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+
+        /* Стили для кнопок в верхнем меню */
+        .navbar-nav .nav-link {
+            position: relative;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #f39c12; /* Оранжевый цвет полоски */
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover::before {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+
+        /* Стили для формы обратной связи */
+        .feedback-form {
+            margin: auto;
+            max-width: 430px;
+            background-color: #212529;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-form h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .feedback-form button[type="submit"] {
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .feedback-form button[type="submit"]:hover {
+            background-color: #ffaa00; /* Измененный цвет при наведении */
+        }
+
+        /* Стили для контактных иконок */
+        .contact-icons {
+            margin-top: 20px;
+            font-size: 32px;
+            text-align: center;
+        }
+
+        .contact-icons a {
+            color: #f39c12;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .contact-icons a:hover {
+            color: #0056b3;
+        }
+
+        /* Стили для поля ввода и текстового поля */
+        .feedback-form input[type="text"],
+        .feedback-form input[type="email"],
+        .feedback-form textarea {
+            background-color: #343a40; /* Цвет поля ввода */
+            color: #ffffff; /* Белый цвет текста */
+            border-color: #1d2124; /* Цвет рамки */
+        }
+
+        /* При фокусе */
+        .feedback-form input[type="text"]:focus,
+        .feedback-form input[type="email"]:focus,
+        .feedback-form textarea:focus {
+            border-color: #f39c12; /* Цвет рамки при фокусе */
+            box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25); /* Эффект тени при фокусе */
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="{% static 'img/image.png' %}" width="200" height="45" alt="TechMentor"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'feedback' %}">Contacts</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <!-- Форма обратной связи -->
+    <div class="feedback-form">
+        <h1>Contact Us</h1>
+        <form id="feedback-form">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+</div>
+
+<!-- Контактные иконки -->
+<div class="text-center contact-icons mt-5">
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-linkedin"></i></a>
+</div>
+
+<!-- Логотип -->
+<div class="logo-container">
+    <p>© 2024 TeachMentor</p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#feedback-form').submit(function(e){
+            e.preventDefault(); // Предотвращаем перезагрузку страницы
+
+            // Получаем данные формы
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var message = $('#message').val();
+
+            // Отправляем данные на сервер (здесь вы должны указать URL вашего сервера)
+            $.ajax({
+                url: 'URL_вашего_сервера_для_обработки_формы',
+                type: 'POST',
+                data: {
+                    name: name,
+                    email: email,
+                    message: message
+                },
+                success: function(response){
+                    // Обработка успешного ответа от сервера (если нужно)
+                    alert('Message sent successfully!');
+                    $('#name').val('');
+                    $('#email').val('');
+                    $('#message').val('');
+                },
+                error: function(xhr, errmsg, err){
+                    // Обработка ошибки (если нужно)
+                    alert('Failed to send message.');
+                }
+            });
+        });
+
+        // Добавляем эффект кнопки "Send"
+        $('.feedback-form button[type="submit"]').mouseenter(function() {
+            $(this).css('background-color', '#ffaa00');
+        }).mouseleave(function() {
+            $(this).css('background-color', '#f39c12');
+        });
+    });
+</script>
+</body>
+</html>

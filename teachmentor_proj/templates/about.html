@@ -1,0 +1,161 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Подключаем стили Bootstrap для удобного создания интерфейса -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Подключаем стили Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Общие стили */
+        body {
+            background-color: #121212; /* Очень темный цвет фона */
+            color: #ffffff; /* Белый цвет текста */
+            font-family: Arial, sans-serif;
+            padding-top: 60px; /* Компенсация для фиксированного верхнего меню */
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        /* Стили для верхнего меню */
+        .navbar {
+            background-color: #212529; /* Очень темный цвет верхнего меню */
+        }
+
+        .navbar-brand {
+            color: #ffffff; /* Белый цвет текста логотипа */
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: #ffffff; /* Белый цвет текста логотипа при наведении */
+            transform: scale(1.1);
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff; /* Белый цвет текста ссылок в меню */
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa; /* Очень светлый цвет текста ссылок в меню при наведении */
+        }
+
+        /* Эффект подчеркивания для верхних кнопок меню */
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #f39c12; /* Цвет подчеркивания */
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+
+        /* Стили для содержимого страницы "About Us" */
+        .about-us-content {
+            margin: auto;
+            max-width: 800px;
+            background-color: #212529; /* Очень темный цвет фона */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Белая тень */
+        }
+
+        .about-us-content h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffffff; /* Белый цвет текста заголовка */
+        }
+
+        .about-us-content p {
+            color: #ffffff; /* Белый цвет текста */
+            margin-bottom: 20px;
+        }
+
+        /* Кнопка "Back to Home" */
+        .back-to-home-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-home-btn a {
+            color: #ffffff; /* Белый цвет текста ссылки */
+            background-color: #f39c12; /* Оранжевый цвет кнопки */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Добавляем анимацию цвета и размера кнопки */
+        }
+
+        .back-to-home-btn a:hover {
+            background-color: #f39c12; /* Оранжевый цвет кнопки при наведении */
+            transform: scale(1.05); /* Увеличиваем размер кнопки при наведении */
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхнее меню -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="{% static 'img/image.png' %}" width="200" height="45" alt="TeachMentor"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About Us</a> <!-- Ссылка на страницу "About" -->
+                    </li>
+                    <li><a class="nav-link" href="{% url 'feedback' %}?name-feedback">Contacts</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Содержимое страницы "About Us" -->
+    <div class="container mt-5 about-us-content">
+        <!-- Заголовок -->
+        <h1 class="mb-5">About Us</h1>
+
+        <!-- Информация о вашей компании или проекте -->
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.</p>
+        <p>Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
+        <p>Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+
+        <!-- Кнопка "Back to Home" -->
+        <div class="back-to-home-btn">
+            <a href="/" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+
+    <!-- Подключаем скрипты Bootstrap и Font Awesome для правильной работы иконок и стилей -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

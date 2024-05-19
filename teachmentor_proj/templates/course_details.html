@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Общие стили */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            padding-top: 60px; /* Компенсация для фиксированного верхнего меню */
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .course-details {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .course-details h2 {
+            color: #343a40;
+        }
+
+        .course-details p {
+            color: #6c757d;
+        }
+
+        .course-details a.btn {
+            margin-top: 10px;
+        }
+
+        /* Стили для верхнего меню */
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .navbar-brand:hover {
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #fff;
+        }
+
+        .navbar-toggler {
+            border-color: #fff;
+        }
+
+        .navbar-dark .navbar-nav .active > .nav-link {
+            color: #f8f9fa;
+            background-color: #6c757d;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+        }
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="{% static 'img/image.png' %}" width="200" height="45" alt="TechMentor"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                </li>
+                {% if user.is_authenticated %}
+                         <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_profile' %}">Profile</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+                    </li>
+
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'feedback' %}?name-feedback">Contacts</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="course-details">
+        <h2>{{ course.course_name }}</h2>
+        <p>Description: {{ course.description }}</p>
+
+        <!-- Ссылки на книгу и видео -->
+        <a href="{{ course.book_link }}" class="btn btn-secondary" target="_blank">Link to Book</a>
+        <a href="{{ course.video_link }}" class="btn btn-secondary" target="_blank">Link to Video</a>
+        {%if test%}
+        <a href="{% url 'test' test_id=test.id %}"  class="btn btn-secondary" target="_blank">{{ test.title }}</a>
+        {%endif%}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+</body>
+</html>
