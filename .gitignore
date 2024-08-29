@@ -1,2 +1,4 @@
 .idea/
 migrations/
+teacmentor_env/
+db.sqlite
