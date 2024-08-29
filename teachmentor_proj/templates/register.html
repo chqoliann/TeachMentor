@@ -5,51 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
-    <!-- Подключаем стили Bootstrap для удобного создания интерфейса -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Подключаем стили Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* Общие стили */
         body {
-            background-color: #121212; /* Очень темный цвет фона */
-            color: #ffffff; /* Белый цвет текста */
+            background-color: #121212;
+            color: #ffffff;
             font-family: Arial, sans-serif;
-            padding-top: 60px; /* Компенсация для фиксированного верхнего меню */
+            padding-top: 60px;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
-
         .container {
             max-width: 800px;
         }
-
-        /* Стили для верхнего меню */
         .navbar {
-            background-color: #212529; /* Очень темный цвет верхнего меню */
+            background-color: #212529;
         }
-
         .navbar-brand {
-            color: #ffffff; /* Белый цвет текста логотипа */
+            color: #ffffff;
             font-size: 24px;
             transition: transform 0.3s ease;
         }
-
         .navbar-brand:hover {
-            color: #ffffff; /* Белый цвет текста логотипа при наведении */
+            color: #ffffff;
             transform: scale(1.1);
         }
-
         .navbar-nav .nav-link {
-            color: #ffffff; /* Белый цвет текста ссылок в меню */
+            color: #ffffff;
             position: relative;
             transition: color 0.3s ease;
         }
-
         .navbar-nav .nav-link:hover {
-            color: #f8f9fa; /* Очень светлый цвет текста ссылок в меню при наведении */
+            color: #f8f9fa;
         }
-
-        /* Эффект подчеркивания для верхних кнопок меню */
         .navbar-nav .nav-link::after {
             content: "";
             position: absolute;
@@ -57,90 +45,78 @@
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: #f39c12; /* Цвет подчеркивания */
+            background-color: #f39c12;
             visibility: hidden;
             transform: scaleX(0);
             transition: all 0.3s ease-in-out;
         }
-
         .navbar-nav .nav-link:hover::after {
             visibility: visible;
             transform: scaleX(1);
         }
-
-        /* Стили для формы регистрации */
         .register-form {
             margin: auto;
             max-width: 400px;
-            background-color: #212529; /* Очень темный цвет фона формы */
+            background-color: #212529;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Белая тень */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
-
         .register-form h1 {
             text-align: center;
             margin-bottom: 20px;
-            color: #ffffff; /* Белый цвет текста заголовка */
+            color: #ffffff;
         }
-
         .register-form input[type="text"],
         .register-form input[type="email"],
         .register-form input[type="password"] {
-            background-color: #343a40; /* Очень темный цвет поля ввода */
-            color: #ffffff; /* Белый цвет текста в поле ввода */
+            background-color: #343a40;
+            color: #ffffff;
             border: none;
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 20px;
             width: 100%;
         }
-
         .register-form input[type="text"].is-invalid,
         .register-form input[type="email"].is-invalid,
         .register-form input[type="password"].is-invalid {
-            border-color: #dc3545; /* Цвет границы поля ввода при ошибке */
+            border-color: #dc3545;
         }
-
         .register-form .invalid-feedback {
-            color: #dc3545; /* Красный цвет текста сообщения об ошибке */
-            font-size: 80%; /* Уменьшаем размер шрифта сообщения об ошибке */
-            margin-top: .25rem; /* Отступ сверху */
+            color: #dc3545;
+            font-size: 80%;
+            margin-top: .25rem;
         }
-
         .register-form button[type="submit"] {
-            background-color: #f39c12; /* Оранжевый цвет кнопки */
-            color: #ffffff; /* Белый цвет текста кнопки */
+            background-color: #f39c12;
+            color: #ffffff;
             border: none;
             border-radius: 5px;
             padding: 10px 20px;
             text-transform: uppercase;
             font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Добавляем анимацию цвета и размера кнопки */
+            transition: background-color 0.3s ease, transform 0.3s ease;
             width: 100%;
         }
-
         .register-form button[type="submit"]:hover {
-            background-color: #f39c12; /* Оранжевый цвет кнопки при наведении */
-            transform: scale(1.05); /* Увеличиваем размер кнопки при наведении */
+            background-color: #f39c12;
+            transform: scale(1.05);
         }
-
         .register-form a {
-            color: #ffffff; /* Белый цвет текста ссылки */
-            text-decoration: none; /* Убираем подчеркивание ссылки */
-            display: block; /* Превращаем ссылку в блочный элемент */
-            text-align: center; /* Выравниваем текст по центру */
-            margin-top: 20px; /* Отступ сверху */
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
             transition: color 0.3s ease;
         }
-
         .register-form a:hover {
-            color: #f39c12; /* Оранжевый цвет ссылки при наведении */
+            color: #f39c12;
         }
     </style>
 </head>
 <body>
-    <!-- Верхнее меню -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/"><img src="{% static 'img/image.png' %}" width="200" height="45" alt="TeachMentor"></a>
@@ -180,25 +156,37 @@
             <h1>Registration</h1>
             <form method="post">
                 {% csrf_token %}
-                <input type="text" name="username" placeholder="Username">
-                {% if user_form.username.errors %}
-                    <div class="invalid-feedback">{{ user_form.username.errors }}</div>
-                {% endif %}
-                <br>
-                <input type="email" name="email" placeholder="Email">
-                {% if user_form.email.errors %}
-                    <div class="invalid-feedback">{{ user_form.email.errors }}</div>
-                {% endif %}
-                <br>
-                <input type="password" name="password1" placeholder="Password">
-                <br>
-                <input type="password" name="password2" placeholder="Confirm Password">
-                <button type="submit">Register</button>
+                {{ user_form.non_field_errors }}
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control{% if user_form.username.errors %} is-invalid{% endif %}" placeholder="Username" value="{{ user_form.username.value|default:'' }}">
+                    {% if user_form.username.errors %}
+                        <div class="invalid-feedback">{{ user_form.username.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control{% if user_form.email.errors %} is-invalid{% endif %}" placeholder="Email" value="{{ user_form.email.value|default:'' }}">
+                    {% if user_form.email.errors %}
+                        <div class="invalid-feedback">{{ user_form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control{% if user_form.password.errors %} is-invalid{% endif %}" placeholder="Password">
+                    {% if user_form.password.errors %}
+                        <div class="invalid-feedback">{{ user_form.password.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password2" class="form-control{% if user_form.password2.errors %} is-invalid{% endif %}" placeholder="Confirm Password">
+                    {% if user_form.password2.errors %}
+                        <div class="invalid-feedback">{{ user_form.password2.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
             </form>
+            <a href="{% url 'login' %}">Already have an account? Sign in</a>
         </div>
     </div>
 
-    <!-- Подключаем скрипты Bootstrap и Font Awesome для правильной работы иконок и стилей -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

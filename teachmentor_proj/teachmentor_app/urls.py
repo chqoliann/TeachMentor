@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import feedback_success,feedback_view, index, about, user_login, user_logout, register, register_done, like_course, user_profile, course_details, add_course, process_test, view_test
+from .views import feedback_success,feedback_view, index, about, user_login, user_logout, register, register_done, like_course, user_profile, course_details, add_course, process_test, view_test, error_404_view
+from django.conf.urls import handler404
 
 
 urlpatterns = [
@@ -19,3 +20,5 @@ urlpatterns = [
     path('test/<int:test_id>/process/', process_test, name='process_test'),
 ]
 
+
+handler404 = error_404_view

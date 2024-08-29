@@ -44,7 +44,9 @@ def register(request):
             new_user.save()
             UserProfile.objects.create(user=new_user)
             login(request, new_user)
-            return redirect('login')
+            return redirect('index')
+        else:
+            return render(request, 'register.html', {'user_form': user_form})
     else:
         user_form = UserRegistrationForm()
     return render(request, 'register.html', {'user_form': user_form})
@@ -58,11 +60,17 @@ def user_login(request):
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             if user is not None:
-                login(request, user)
-                return redirect('index')
+                if user.is_active:
+                    login(request, user)
+                    return redirect('index')
+                else:
+                    error = 'Account is disabled.'
+                    return render(request, 'login.html', {'form': form, 'error': error})
             else:
                 error = 'Invalid login credentials'
                 return render(request, 'login.html', {'form': form, 'error': error})
+        else:
+            return render(request, 'login.html', {'form': form, 'errors': form.errors})
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {'form': form})
@@ -75,7 +83,6 @@ def user_logout(request):
 
 def register_done(request):
     return render(request, 'register_done.html')
-
 
 
 def like_course(request, course_id):
@@ -157,4 +164,7 @@ def process_test(request, test_id):
     else:
         return redirect('test', test_id=test_id)
 
+
+def error_404_view(request, exception):
+    return render(request, '404.html', status=404)
 

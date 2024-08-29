@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,83 +10,85 @@
     <style>
     /* Общие стили */
     body {
-        background-color: #f8f9fa;
+        background-color: #121212; /* Темный цвет фона */
+        color: #ffffff; /* Белый цвет текста */
         font-family: Arial, sans-serif;
         padding-top: 60px; /* Компенсация для фиксированного верхнего меню */
     }
 
     .container {
         max-width: 800px;
-
     }
 
     .navbar {
-        background-color: #343a40;
+        background-color: #212529;
     }
 
     .navbar-brand {
-        color: #fff;
+        color: #ffffff;
         font-size: 24px;
     }
 
     .navbar-brand:hover {
-        color: #fff;
+        color: #ffffff;
     }
 
     .navbar-nav .nav-link {
-        color: #fff;
+        color: #ffffff;
     }
 
     .navbar-nav .nav-link:hover {
         color: #f8f9fa;
     }
 
-    .profile_container {
-        position: fixed;
-        left: 745px;
-        top: 190px;
-
+    .profile_section {
+        border: 1px solid #343a40; /* Темная рамка */
+        border-radius: 10px; /* Скругление углов */
+        padding: 20px;
+        margin-bottom: 30px;
+        background-color: #212529; /* Темный фон секции */
     }
+
+    .profile_section h1, .profile_section h2 {
+        color: #ffffff; /* Белый цвет заголовков */
+    }
+
+    .profile_section p {
+        color: #6c757d; /* Светло-серый цвет текста */
+    }
+
+    .liked-courses li {
+        color: #f8f9fa; /* Белый цвет текста в списке */
+        font-size: 16px;
+        font-weight: bold;
+    }
+
     .logo-container {
-        position: fixed;
-        left: 850px;
-        top: 800px;
-
+        text-align: center;
+        margin-top: 30px;
     }
-    .profile-section {
-            border: 5px solid #dee2e6; /* Рамка вокруг раздела */
-            border-radius: 10px; /* Скругление углов */
-            padding: 10px;
-            margin-bottom: 30px;
 
-        }
-    .profile-section h1 {
-            margin-top: 0; /* Убираем отступ сверху у заголовка */
-        }
+    .logo-container a {
+        color: #ffffff; /* Белый цвет иконок социальных сетей */
+        font-size: 24px;
+        margin: 0 10px;
+    }
 
-        .profile-section h2 {
-            margin-top: 0;
-        }
+    .logo-container p {
+        color: #6c757d; /* Светло-серый цвет текста */
+    }
 
-        .profile-section p {
-            margin-bottom: 5px;
-        }
+    .btn-secondary {
+        background-color: #343a40;
+        border-color: #343a40;
+        color: #ffffff;
+    }
 
-        .liked-courses li {
-            color: #343a40;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .width-profile {
-           max-width: 300px;
-    margin: 0 auto;
-    text-align: center;
-
-        }
-
-</style>
-
+    .btn-secondary:hover {
+        background-color: #495057;
+        border-color: #495057;
+    }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -105,6 +107,12 @@
                     <a class="nav-link" href="{% url 'about' %}">About Us</a>
                 </li>
                 {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
+                    </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Sign In</a>
@@ -121,55 +129,38 @@
     </div>
 </nav>
 
-
 <div class="container mt-5">
-    <div class="width-profile">
-    <div class="profile-section">
-        <div class="user-info">
+    <div class="profile_section">
         <h1>User Profile</h1>
-        </div>
-    </div>
-    </div>
-    <div class="profile-section">
-        <div class="user-info">
-            <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
-            <p><strong>Registration Date:</strong> {{ user_profile.registration_date }}</p>
-        </div>
+        <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
+        <p><strong>Registration Date:</strong> {{ user_profile.registration_date }}</p>
     </div>
 
     <!-- Понравившиеся курсы -->
-    <div class="profile-section liked-courses">
+    <div class="profile_section">
         <h2>Liked Courses:</h2>
-        <ul>
+        <ul class="liked-courses">
             {% for course in liked_courses %}
-                <a href="{% url 'course_details' course.id%}"> <li>{{ course.course_name }}</li></a>
-
+                <li><a href="{% url 'course_details' course.id %}" class="btn btn-secondary">{{ course.course_name }}</a></li>
             {% endfor %}
         </ul>
-           <li class="nav-item">
-                        <a class="nav-link link-effect" href="{% url 'add_course' %}">Add Course</a>
-                    </li>
+        <a href="{% url 'add_course' %}" class="btn btn-secondary">Add Course</a>
     </div>
 </div>
 
-
-    <div class="logo-container">
-    <div class="text-center contact-icons mt-5">
+<div class="logo-container">
+    <div class="text-center">
         <a href="https://www.instagram.com/nar.chqolyann"><i class="fab fa-instagram"></i></a>
         <a href="https://www.facebook.com/profile.php?id=100066708270558"><i class="fab fa-facebook"></i></a>
         <a href="https://vk.com/id856189582"><i class="fab fa-vk"></i></a>
         <a href="https://www.linkedin.com/in/narek-chqolian-0b3b27290/"><i class="fab fa-linkedin"></i></a>
-
-            <p>© 2024 TeachMentor</p>
-        </div>
+        <p>© 2024 TeachMentor</p>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-                    <li class="nav-item">
-                        <a class="nav-link link-effect" href="{% url 'logout' %}">Sign Out</a>
-                    </li>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 </body>
 </html>

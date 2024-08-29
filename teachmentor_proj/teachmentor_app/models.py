@@ -57,7 +57,6 @@ class Choice(models.Model):
         return f"{self.question.text} - {self.text} - {self.is_correct}"
 
 
-
 class UserTestResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
